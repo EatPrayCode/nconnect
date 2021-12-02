@@ -1,3 +1,7 @@
+import { NewPostComponent } from './components/posts/new-post/new-post.component';
+import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
+import { NewPostModule } from './components/posts/new-post/new-post.module';
+import { environment } from 'src/environments/environment';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
@@ -13,9 +17,28 @@ import { UserModule } from "./user/user.module";
 import { httpInterceptorProviders } from "./interceptor/providers";
 import { CalendarModule } from "./calendar/calendar.module";
 import { LandingModule } from "./landing/landing.module";
+import { DetailsPostComponent } from "./components/posts/details-post/details-post.component";
+import { MaterialModule } from "./material/material.module";
+
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule, StorageBucket } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { ContainerAppComponent } from './components/pages/container-app/container-app.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+import { EditPostModule } from './components/posts/edit-post/edit-post.module';
 
 @NgModule({
-  declarations: [AppComponent, MainNavComponent, PageNotFoundComponent],
+  declarations: [AppComponent, MainNavComponent, PageNotFoundComponent,
+    NewPostComponent,
+    ToolbarComponent,
+    ContainerAppComponent,
+    ModalComponent,
+    EditPostComponent,
+    DetailsPostComponent],
   imports: [
     BrowserModule,
     MdbootstrapModule,
@@ -26,8 +49,17 @@ import { LandingModule } from "./landing/landing.module";
     UserModule,
     CalendarModule,
     AppRoutingModule,
+    MaterialModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    AppRoutingModule,
+    NewPostModule,
+    ReactiveFormsModule,
+    EditPostModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

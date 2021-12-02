@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { PageNotFoundComponent } from "../page-not-found/page-not-found.component";
 import { AuthGuard } from "../user/auth.guard";
 import { LandingComponent } from "../landing/landing/landing.component";
+import { DetailsPostComponent } from "../components/posts/details-post/details-post.component";
 
 const appRoutes: Routes = [
   {
@@ -37,6 +38,19 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import("../calendar/calendar.module").then((mod) => mod.CalendarModule),
     data: { preload: true },
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('../components/pages/home/home.module').then(m => m.HomeModule)
+  },
+  { path: 'post/:id', component: DetailsPostComponent },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('../components/pages/about/about.module').then(
+        m => m.AboutModule
+      )
   },
 
   { path: "", component: LandingComponent },
