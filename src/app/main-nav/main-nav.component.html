@@ -1,0 +1,40 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark blue">
+    <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['']">Appointo</a></mdb-navbar-brand>
+
+    <links>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link waves-light active" [routerLink]="['']" mdbWavesEffect>Home<span
+                        class=" sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link waves-light" [routerLink]="['/hairdresser/list']" mdbWavesEffect>Kappers</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+            <div *ngIf="loggedInUser$ | async as user; else loginTemplate">
+                <li class="nav-item dropdown" dropdown>
+                    <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light"
+                        mdbWavesEffect>
+                        <mdb-icon fas icon="user"></mdb-icon>{{ user }}<span class="caret"></span>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+                        <a class="dropdown-item waves-light" mdbWavesEffect
+                            [routerLink]="['/manage/settings']">Beheer</a>
+                        <a class="dropdown-item waves-light" mdbWavesEffect
+                            [routerLink]="['/manage/calendar']">Kalender</a>
+                        <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Uitloggen</a>
+                    </div>
+                </li>
+            </div>
+            <ng-template #loginTemplate>
+                <li class="nav-item">
+                    <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/register']">Registeren</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-light" mdbWavesEffect (click)="login()">Inloggen</a>
+                </li>
+            </ng-template>
+        </ul>
+    </links>
+</mdb-navbar>

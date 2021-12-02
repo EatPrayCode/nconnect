@@ -1,0 +1,51 @@
+<div class="alert alert-warning" role="alert">
+    <div class="text-center">
+        Vergeet niet om de uren te bevestigen onderaan de pagina!
+    </div>
+</div>
+<div class="text-center">
+    <a [routerLink]="['/manage/settings']" mdbBtn color="primary" mdbWavesEffect>Terug</a>
+</div>
+<div class="container">
+    <form [formGroup]="days" (ngSubmit)="onSubmit()" class="justify-content-md-center">
+        <div *ngFor="let dayString of daysArrayNl; let x = index">
+            <div class="day">
+                <div class="text-center">
+                    <h3>{{ dayString }}</h3>
+                </div>
+                <div formArrayName="{{daysArrayEn[x]}}"
+                    *ngFor="let item of days.get(daysArrayEn[x])['controls']; let i = index">
+                    <div [formGroupName]="i">
+                        <div class="md-form input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text md-addon">Van - Tot</span>
+                            </div>
+                            <input type="time" id="input" class="form-control" mdbInput formControlName="start" />
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="days.get(daysArrayEn[x])['errors'] && days.get('category').touched">
+                                {{ getErrorMessage(days.get('category')['errors']) }}
+                            </div>
+                            <input type="time" id="input" class="form-control" mdbInput formControlName="end" />
+                            <button type="button" mdbBtn color="danger" mdbWavesEffect
+                                (click)="removeWorkBlock(x, i)">Verwijder</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" mdbBtn color="primary" mdbWavesEffect (click)="addWorkBlock(x)">Werkblok
+                    toevoegen</button>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="alert alert-danger col-lg-4 col-md-12" role="alert" *ngIf="days.errors">
+                {{ getErrorMessage(days.errors) }}
+            </div>
+        </div>
+        <div *ngIf="message" class="alert alert-success" role="alert">
+            <div class="text-center">
+                {{message}}
+            </div>
+        </div>
+        <button mdbBtn color="primary" block="true" class="my-4" type="submit"
+            [disabled]="days.invalid">Bevestig</button>
+    </form>
+</div>

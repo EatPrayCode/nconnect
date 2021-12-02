@@ -1,0 +1,111 @@
+<div *ngIf="treatments.length > 0 else noSelectedTreatments">
+    <div
+        *ngIf="hairdresserFromDataService != null && hairdresserFromDataService.id == hairdresser.id else noSelectedTreatments">
+        <div class="container">
+            <div class="center">
+                <mdb-card class="text-center">
+                    <mdb-card-header>Datum en uur kiezen</mdb-card-header>
+                    <mdb-card-body>
+                        <mdb-card-text>
+                            <div class="row">
+                                <div class="col-md-6  col-sm-12">
+                                    <mdb-card-title>
+                                        <h5>Datum en uur</h5>
+                                    </mdb-card-title>
+                                    <form [formGroup]="datePick" (ngSubmit)="dateSubmit()">
+                                        <mat-form-field>
+                                            <mat-label>Kies een datum</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="date"
+                                                [min]="currentDate" required>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                        <button mdbBtn color="primary" type="submit" [disabled]="!datePick.valid">
+                                            Kies</button>
+                                    </form>
+                                    <div *ngIf="hours$ | async as hours">
+                                        <div *ngIf="hours.length > 0">
+                                            <div class="time-picker">
+                                                <mat-tab-group mat-align-tabs="center">
+                                                    <mat-tab label="Voormiddag">
+                                                        <mdb-card>
+                                                            <mdb-card-body class="hourblock">
+                                                                <div *ngFor="let hour of hours">
+                                                                    <button
+                                                                        *ngIf="hour.toString().substring(11,13) < '12'"
+                                                                        class="hour" (click)="pickHour(hour, $event)">
+                                                                        {{hour.toString().substring(11,16)}}
+                                                                    </button>
+                                                                </div>
+                                                            </mdb-card-body>
+                                                        </mdb-card>
+                                                    </mat-tab>
+                                                    <mat-tab label="Namiddag">
+                                                        <mdb-card>
+                                                            <mdb-card-body class="hourblock">
+                                                                <div *ngFor="let hour of hours">
+                                                                    <button
+                                                                        *ngIf="hour.toString().substring(11,13) >= '12'"
+                                                                        class="hour" (click)="pickHour(hour, $event)">
+                                                                        {{hour.toString().substring(11,16)}}
+                                                                    </button>
+                                                                </div>
+                                                            </mdb-card-body>
+                                                        </mdb-card>
+                                                    </mat-tab>
+                                                </mat-tab-group>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="list-group">
+
+                                        <div class="list-group-item active waves-light" mdbWavesEffect>
+                                            Gekozen behandelingen
+                                        </div>
+                                        <div *ngFor="let treatment of treatments" class="list-group-item waves-light">
+                                            {{treatment.name}}, {{treatment.categoryString}}
+                                            <div *ngIf="treatment.amount > 1" class="d-inline-block amount">
+                                                x{{treatment.amount}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form class="text-center border border-light p-5 mt-5" [formGroup]="name"
+                                        (ngSubmit)="submitAppointment()">
+                                        Voornaam
+                                        <input type="text" id="defaultSubscriptionFormPassword"
+                                            class="form-control mb-4" formControlName="firstname"
+                                            placeholder="Voornaam">
+                                        <div class="alert alert-danger" role="alert"
+                                            *ngIf="name.get('firstname')['errors'] && name.get('firstname').touched">
+                                            {{ getErrorMessage(name.get('firstname')['errors']) }}
+                                        </div>
+                                        Achternaam
+                                        <input type="text" id="defaultSubscriptionFormPassword"
+                                            class="form-control mb-4" formControlName="lastname"
+                                            placeholder="Achternaam">
+                                        <div class="alert alert-danger" role="alert"
+                                            *ngIf="name.get('lastname')['errors'] && name.get('lastname').touched">
+                                            {{ getErrorMessage(name.get('lastname')['errors']) }}
+                                        </div>
+                                        <button mdbBtn color="primary" type="submit"
+                                            [disabled]="name.invalid || !hourValid">Bevestig
+                                            afspraak</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </mdb-card-text>
+
+
+                    </mdb-card-body>
+                </mdb-card>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #noSelectedTreatments>
+    <div class="alert alert-danger" role="alert">
+        Er zijn geen behandelingen geselecteerd voor deze kapper.
+    </div>
+</ng-template>

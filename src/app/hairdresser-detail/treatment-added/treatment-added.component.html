@@ -1,0 +1,42 @@
+<div class="treatments">
+    <div class="row">
+        <app-treatment-list [hairdresser]="hairdresser" (newTreatment)="receiveAddedTreatment($event)"
+            class="col-xl-6 col-md-12">
+        </app-treatment-list>
+        <div class="col-xl-6 col-md-12">
+            <div class="list-group">
+                <div class="list-group-item active waves-light" mdbWavesEffect>
+                    Geselecteerde behandelingen
+                </div>
+                <div *ngIf="treatments.length > 0; else noTreatments">
+                    <div *ngFor="let treatment of treatments" class="list-group-item waves-light">
+                        {{treatment.name}},
+                        {{treatment.categoryString}}
+                        <div *ngIf="treatment.amount > 1 else noAmount" class="d-inline-block amount">
+                            <button type="button" class="removeTreatment"
+                                (click)="removeTreatment(treatment)">-</button>
+                            x{{treatment.amount}}
+                        </div>
+                        <ng-template #noAmount>
+                            <div class="d-inline-block amount">
+                                <button type="button" class="removeTreatment"
+                                    (click)="removeTreatment(treatment)">-</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="list-group-item">
+                        Totaalprijs: €{{this.totalPrice}}
+                    </div>
+                    <div>
+                        <a mdbBtn color="primary" class="add float-right"
+                            [routerLink]="['/hairdresser/appointment/create/', this.hairdresser.id]">Bevestigen</a>
+                    </div>
+                </div>
+                <ng-template #noTreatments>
+                    <div class="list-group-item waves-light">
+                        Er zijn geen behandelingen geselecteerd</div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

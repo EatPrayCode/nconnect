@@ -1,0 +1,51 @@
+<div class="text-center mt-5 mb-5">
+
+</div>
+<div class="container">
+    <table mdbTable>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Naam</th>
+                <th scope="col">Man / Vrouw / kinderen</th>
+                <th scope="col">Prijs</th>
+                <th scope="col">Duur</th>
+                <th scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody *ngIf="treatments$ | async as treatments">
+            <tr mdbTableCol *ngFor="let treatment of treatments" data-cy="treatmentRow">
+                <th scope="row">{{treatment.id}}</th>
+                <td>{{treatment.name}}</td>
+                <td>{{giveCategoryString(treatment.category)}}</td>
+                <td>€{{treatment.price}}</td>
+                <td>{{treatment.duration.hours}}:{{treatment.duration.minutes}}:{{treatment.duration.seconds}}</td>
+                <td>
+                    <a [routerLink]="['/manage/treatments/edit/', treatment.id]" mdbBtn color="primary" class="button"
+                        mdbWavesEffect>Wijzig</a>
+                    <button mdbBtn color="danger" class="button" mdbWavesEffect
+                        (click)="deleteTreatment(treatment)">Verwijder</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="warningMessage" class="alert alert-warning" role="alert">
+        {{warningMessage}}
+        <button (click)="confirmDeleteTreatment()" mdbBtn color="danger" mdbWavesEffect>Bevestigen</button>
+
+    </div>
+
+    <div class="row justify-content-start">
+        <div class="col-4">
+            <a [routerLink]="['/manage/settings']" mdbBtn color="primary" mdbWavesEffect>Terug</a>
+        </div>
+
+        <div class="col-8">
+            <a [routerLink]="['/manage/treatments/create/']" mdbBtn color="success" mdbWavesEffect
+                id="createTreatment">Nieuwe
+                behandeling aanmaken</a>
+        </div>
+    </div>
+
+</div>

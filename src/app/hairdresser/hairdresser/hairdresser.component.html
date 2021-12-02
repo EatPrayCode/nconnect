@@ -1,0 +1,36 @@
+<!-- Card -->
+<mdb-card class="height">
+    <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+        <!-- Card img -->
+        <div *ngIf="hairdresser.cardImagePath else defaultCardImage" class="card-img">
+            <mdb-card-img [src]="createImagePath(hairdresser.cardImagePath)" alt="Card image cap">
+            </mdb-card-img>
+        </div>
+        <ng-template #defaultCardImage>
+            <div class="card-img">
+                <!-- <mdb-card-img src="https://cdn.pixabay.com/photo/2019/03/08/20/17/beauty-salon-4043096_960_720.jpg"
+                    alt="Card image cap">
+                </mdb-card-img> -->
+                <mdb-card-img src="assets/images/card-image.jpg" alt="Card image cap">
+                </mdb-card-img>
+            </div>
+        </ng-template>
+
+
+    </div>
+    <!--Card content-->
+    <mdb-card-body>
+        <!--Title-->
+        <mdb-card-title data-cy="hairdresser-title">
+            <h4>{{this.hairdresser.name}}</h4>
+        </mdb-card-title>
+
+        <!--Text-->
+        <mdb-card-text> Maak vandaag nog een afspraak bij deze kapper!
+        </mdb-card-text>
+
+        <a mdbBtn color="primary" mdbWavesEffect [routerLink]="['/hairdresser/detail/', this.hairdresser.id]">Meer
+            info</a>
+    </mdb-card-body>
+</mdb-card>
+<!-- Card -->
