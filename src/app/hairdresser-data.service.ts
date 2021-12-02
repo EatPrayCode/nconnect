@@ -4,7 +4,7 @@ import {
   HttpParams,
   HttpErrorResponse,
 } from "@angular/common/http";
-import { Observable, BehaviorSubject, throwError } from "rxjs";
+import { Observable, BehaviorSubject, throwError, of } from "rxjs";
 import { Hairdresser } from "./hairdresser.model";
 import { environment } from "src/environments/environment";
 import { map, tap, switchMap, catchError } from "rxjs/operators";
@@ -35,18 +35,21 @@ export class HairdresserDataService {
   fetchHairdressers$(name?: string) {
     let params = new HttpParams();
     params = name ? params.append("name", name) : params;
-    return this.http
-      .get(`${environment.apiUrl}/hairdressers/`, { params })
-      .pipe(
-        catchError(this.handleError),
-        map((list: any[]): Hairdresser[] => list.map(Hairdresser.fromJSON))
-      );
+    return of([{}, {}]);
+    // TODO: Logic for firebase fetch
+    // return this.http
+    //   .get(`${environment.apiUrl}/hairdressers/`, { params })
+    //   .pipe(
+    //     catchError(this.handleError),
+    //     map((list: any[]): Hairdresser[] => list.map(Hairdresser.fromJSON))
+    //   );
   }
 
-  getHairdresser$(id: number): Observable<Hairdresser> {
-    return this.http
-      .get(`${environment.apiUrl}/hairdressers/${id}`)
-      .pipe(map(Hairdresser.fromJSON));
+  getHairdresser$(id: number): Observable<any> {
+    return of([{}, {}]);
+    // return this.http
+    //   .get(`${environment.apiUrl}/hairdressers/${id}`)
+    //   .pipe(map(Hairdresser.fromJSON));
   }
 
   handleError(err: any): Observable<never> {

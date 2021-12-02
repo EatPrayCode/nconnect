@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Appointment } from "../appointment.model";
-import { BehaviorSubject, Observable, throwError } from "rxjs";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import * as SignalR from "@aspnet/signalr";
 import { Treatment } from "../treatment.model";
@@ -86,9 +86,11 @@ export class AppointmentDataService {
   }
 
   getAppointment$(id: number) {
-    return this.http
-      .get(`${environment.apiUrl}/manage/appointments/${id}`)
-      .pipe(catchError(this.handleError), map(Appointment.fromJSON));
+    return of([{}, {}]);
+    // TODO
+    // return this.http
+    //   .get(`${environment.apiUrl}/manage/appointments/${id}`)
+    //   .pipe(catchError(this.handleError), map(Appointment.fromJSON));
   }
 
   deleteAppointment(appointment: Appointment) {

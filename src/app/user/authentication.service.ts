@@ -10,21 +10,26 @@ import { Router } from "@angular/router";
 })
 export class AuthenticationService {
   private readonly _tokenKey = "currentUser";
-  private _user$: BehaviorSubject<string>;
+  private _user$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    'parsedToken' && 'parsedToken.unique_name'
+  );
   public redirectUrl: string = "";
 
   constructor(private http: HttpClient, private router: Router) {
-    let parsedToken = parseJwt(this.tokenStorage);
-    if (parsedToken) {
-      const expires =
-        new Date(parseInt(parsedToken.exp, 10) * 1000) < new Date();
-      if (expires) {
-        localStorage.removeItem(this._tokenKey);
-        parsedToken = null;
-      }
-    }
+    // let parsedToken = parseJwt(this.tokenStorage);
+    // if (parsedToken) {
+    //   const expires =
+    //     new Date(parseInt(parsedToken.exp, 10) * 1000) < new Date();
+    //   if (expires) {
+    //     localStorage.removeItem(this._tokenKey);
+    //     parsedToken = null;
+    //   }
+    // }
+    // this._user$ = new BehaviorSubject<string>(
+    //   parsedToken && parsedToken.unique_name
+    // );
     this._user$ = new BehaviorSubject<string>(
-      parsedToken && parsedToken.unique_name
+      'userToken' && 'UserName'
     );
   }
 
@@ -94,7 +99,7 @@ export class AuthenticationService {
 
     this.router.navigate(["/"]);
 
-    location.reload(true); // clear all the data that is stored in the browser
+    // location.reload(true); // clear all the data that is stored in the browser
   }
 
   checkUsernameAvailability = (email: string): Observable<boolean> => {

@@ -20,7 +20,7 @@ export class HairdresserListComponent implements OnInit {
   public errorMessage: string;
   public filterHairdresser$ = new Subject<string>();
 
-  private _fetchHairdressers$: Observable<Hairdresser[]>;
+  private _fetchHairdressers$: Observable<any[]>;
 
   constructor(
     private _hairdresserDataService: HairdresserDataService,

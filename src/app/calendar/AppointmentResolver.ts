@@ -17,7 +17,7 @@ export class AppointmentResolver implements Resolve<Appointment> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Appointment> {
+  ): Observable<any> {
     return this.appointmentDataService.getAppointment$(route.params["id"]);
   }
 }
